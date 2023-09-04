@@ -2,7 +2,7 @@
 
 namespace DomeGym.Domain;
 
-public static class SessionError
+public static class SessionErrors
 {
     public static Error CannotHaveMoreReservationThanParticipants = Error.Validation(
         code: "Session.CannotHaveMoreReservationThanParticipants",

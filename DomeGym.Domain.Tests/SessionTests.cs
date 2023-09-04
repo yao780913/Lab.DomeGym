@@ -21,7 +21,7 @@ public class SessionTests
         reserveParticipant1Result.IsError.Should().BeFalse();
         
         reserveParticipant2Result.IsError.Should().BeTrue();
-        reserveParticipant2Result.FirstError.Should().Be(SessionError.CannotHaveMoreReservationThanParticipants);
+        reserveParticipant2Result.FirstError.Should().Be(SessionErrors.CannotHaveMoreReservationThanParticipants);
     }
 
     [Fact]
@@ -44,6 +44,6 @@ public class SessionTests
         reserveSpot.IsError.Should().BeFalse();
 
         cancelReservationResult.IsError.Should().BeTrue();
-        cancelReservationResult.FirstError.Should().Be(SessionError.CannotCancelReservationTooCloseToSession);
+        cancelReservationResult.FirstError.Should().Be(SessionErrors.CannotCancelReservationTooCloseToSession);
     }
 }

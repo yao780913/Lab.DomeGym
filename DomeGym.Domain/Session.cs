@@ -33,7 +33,7 @@ public class Session
     {
         if (_participantIds.Count >= _maxParticipants)
         {
-            return SessionError.CannotHaveMoreReservationThanParticipants;
+            return SessionErrors.CannotHaveMoreReservationThanParticipants;
         }
 
         _participantIds.Add(participant.Id);
@@ -44,7 +44,7 @@ public class Session
     public ErrorOr<Success> CancelReservation (Participant participant, IDateTimeProvider dateTimeProvider)
     {
         if (IsTooCloseToSession(dateTimeProvider.UtcNow))
-            return SessionError.CannotCancelReservationTooCloseToSession;
+            return SessionErrors.CannotCancelReservationTooCloseToSession;
 
         if (_participantIds.Remove(participant.Id))
             return Error.NotFound(description: "Participant is not found");
