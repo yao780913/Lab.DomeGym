@@ -4,8 +4,10 @@ namespace DomeGym.Domain.Tests.TestUtils.Rooms;
 
 public static class RoomFactory
 {
-    public static Room CreateRoom (Guid? id = null)
+    public static Room CreateRoom (
+        int maxDailySession = Constants.Rooms.MaxDailySessions, 
+        Guid? id = null)
     {
-        return new Room(id ?? Constants.Rooms.Id);
+        return new Room(maxDailySession, id ?? Constants.Rooms.Id);
     }
 }

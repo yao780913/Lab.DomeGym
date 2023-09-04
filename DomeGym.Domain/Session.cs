@@ -7,7 +7,6 @@ public class Session
     private readonly DateOnly _date;
     private readonly TimeOnly _startTime;
     private readonly TimeOnly _endTime;
-    private readonly Guid _id;
     private readonly Guid _trainerId;
     private readonly List<Guid> _participantIds = new ();
     private readonly int _maxParticipants;
@@ -26,8 +25,10 @@ public class Session
         _maxParticipants = maxParticipants;
         _trainerId = trainerId;
 
-        _id = id ?? Guid.NewGuid();
+        Id = id ?? Guid.NewGuid();
     }
+
+    public Guid Id { get; }
 
     public ErrorOr<Success> ReserveSpot (Participant participant)
     {
