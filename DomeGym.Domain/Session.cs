@@ -1,4 +1,6 @@
-﻿namespace DomeGym.Domain;
+﻿using ErrorOr;
+
+namespace DomeGym.Domain;
 
 public class Session
 {
@@ -27,23 +29,27 @@ public class Session
         _id = id ?? Guid.NewGuid();
     }
 
-    public void ReserveSpot (Participant participant)
+    public ErrorOr<Success> ReserveSpot (Participant participant)
     {
         if (_participantIds.Count >= _maxParticipants)
         {
-            throw new Exception("Cannot have more reservations than max participants.");
+            return SessionError.CannotHaveMoreReservationThanParticipants;
         }
 
         _participantIds.Add(participant.Id);
+
+        return Result.Success;
     }
 
-    public void CancelReservation (Participant participant, IDateTimeProvider dateTimeProvider)
+    public ErrorOr<Success> CancelReservation (Participant participant, IDateTimeProvider dateTimeProvider)
     {
         if (IsTooCloseToSession(dateTimeProvider.UtcNow))
-            throw new Exception("Cannot cancel reservation too close to session");
+            return SessionError.CannotCancelReservationTooCloseToSession;
 
         if (_participantIds.Remove(participant.Id))
-            throw new Exception("Reservation not found");
+            return Error.NotFound(description: "Participant is not found");
+
+        return Result.Success;
     }
 
     private bool IsTooCloseToSession (DateTime utcNow)

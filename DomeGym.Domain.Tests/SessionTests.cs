@@ -14,12 +14,14 @@ public class SessionTests
         var session = SessionFactory.CreateSession();
         var participant1 = ParticipantFactory.CreateParticipant(id: Guid.NewGuid(), userId: Guid.NewGuid());
         var participant2 = ParticipantFactory.CreateParticipant(id: Guid.NewGuid(), userId: Guid.NewGuid());
+
+        var reserveParticipant1Result = session.ReserveSpot(participant1);
+        var reserveParticipant2Result = session.ReserveSpot(participant2);
+
+        reserveParticipant1Result.IsError.Should().BeFalse();
         
-        session.ReserveSpot(participant1);
-        
-        var action = () => session.ReserveSpot(participant2);
-        
-        action.Should().Throw<Exception>();
+        reserveParticipant2Result.IsError.Should().BeTrue();
+        reserveParticipant2Result.FirstError.Should().Be(SessionError.CannotHaveMoreReservationThanParticipants);
     }
 
     [Fact]
@@ -31,14 +33,17 @@ public class SessionTests
             endTime: Constants.Session.EndTime);
 
         var participant = ParticipantFactory.CreateParticipant();
-        
-        session.ReserveSpot(participant);
+
+        var reserveSpot = session.ReserveSpot(participant);
 
         var cancellationDateTime = Constants.Session.Date.ToDateTime(TimeOnly.MinValue);
-        var action = () => session.CancelReservation(
+        var cancelReservationResult = session.CancelReservation(
             participant, 
             new TestDateTimeProvider(fixedDateTime: cancellationDateTime));
 
-        action.Should().ThrowExactly<Exception>();
+        reserveSpot.IsError.Should().BeFalse();
+
+        cancelReservationResult.IsError.Should().BeTrue();
+        cancelReservationResult.FirstError.Should().Be(SessionError.CannotCancelReservationTooCloseToSession);
     }
 }
