@@ -27,10 +27,7 @@ public class SessionTests
     [Fact]
     public void CancelReservation_WhenCancellationInTooCloseToSession_ShouldFailCancellation ()
     {
-        var session = SessionFactory.CreateSession(
-            date: Constants.Session.Date,
-            startTime: Constants.Session.StartTime,
-            endTime: Constants.Session.EndTime);
+        var session = SessionFactory.CreateSession(date: Constants.Session.Date);
 
         var participant = ParticipantFactory.CreateParticipant();
 

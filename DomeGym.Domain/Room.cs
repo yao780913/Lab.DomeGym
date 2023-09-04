@@ -5,16 +5,17 @@ namespace DomeGym.Domain;
 public class Room
 {
     private readonly int _maxDailySession;
-    private readonly Guid _id;
-    private readonly List<Guid> _sessionIds = new();
+    private readonly Schedule _schedule;
+    private readonly List<Guid> _sessionIds = new ();
 
-    public Room (int maxDailySession, Guid id)
+    public Room (int maxDailySession, Schedule? schedule = null, Guid? id = null)
     {
         _maxDailySession = maxDailySession;
-        _id = id;
+        _schedule = schedule ?? Schedule.Empty();
+        Id = id ?? Guid.NewGuid();
     }
 
-    public Guid Id => _id;
+    public Guid Id { get; }
 
     public ErrorOr<Success> ScheduleSession (Session session)
     {
@@ -25,9 +26,17 @@ public class Room
         {
             return RoomErrors.CannotHaveMoreSessionThanSubscriptionAllows;
         }
-        
+
+        var addEventResult = _schedule.BookTimeSlot(session.Date, session.Time);
+
+        if (addEventResult is { IsError: true, FirstError.Type: ErrorType.Conflict })
+        {
+            return RoomErrors.CannotHaveTwoOrMoreOverlappingSessions;
+        }
+            
+
         _sessionIds.Add(session.Id);
-        
+
         return Result.Success;
     }
 }

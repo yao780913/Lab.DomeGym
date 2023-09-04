@@ -8,6 +8,8 @@ public static class RoomFactory
         int maxDailySession = Constants.Rooms.MaxDailySessions, 
         Guid? id = null)
     {
-        return new Room(maxDailySession, id ?? Constants.Rooms.Id);
+        return new Room(
+            maxDailySession, 
+            id: id ?? Constants.Rooms.Id);
     }
 }

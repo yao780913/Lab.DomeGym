@@ -4,7 +4,6 @@ namespace DomeGym.Domain;
 
 public class Session
 {
-    private readonly DateOnly _date;
     private readonly TimeOnly _startTime;
     private readonly TimeOnly _endTime;
     private readonly Guid _trainerId;
@@ -13,22 +12,22 @@ public class Session
 
     public Session (
         DateOnly date,
-        TimeOnly startTime,
-        TimeOnly endTime,
+        TimeRange time,
         int maxParticipants,
         Guid trainerId,
         Guid? id = null)
     {
-        _date = date;
-        _startTime = startTime;
-        _endTime = endTime;
+        Date = date;
         _maxParticipants = maxParticipants;
         _trainerId = trainerId;
+        Time = time;
 
         Id = id ?? Guid.NewGuid();
     }
 
     public Guid Id { get; }
+    public DateOnly Date { get; }
+    public TimeRange Time { get; set; }
 
     public ErrorOr<Success> ReserveSpot (Participant participant)
     {
@@ -57,6 +56,6 @@ public class Session
     {
         const int MinHours = 24;
 
-        return (_date.ToDateTime(_startTime) - utcNow).TotalHours < MinHours;
+        return (Date.ToDateTime(_startTime) - utcNow).TotalHours < MinHours;
     }
 }
