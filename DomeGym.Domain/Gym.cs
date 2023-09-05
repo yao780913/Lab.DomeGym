@@ -6,15 +6,16 @@ public class Gym
 {
     private readonly int _maxRooms;
     private readonly Guid _subscriptionId;
-    private readonly Guid _id;
     private readonly List<Guid> _roomIds = new ();
 
     public Gym (int maxRooms, Guid subscriptionId, Guid id)
     {
         _maxRooms = maxRooms;
         _subscriptionId = subscriptionId;
-        _id = id;
+        Id = id;
     }
+
+    public Guid Id { get; }
 
     public ErrorOr<Success> AddRoom (Room room)
     {
