@@ -1,3 +1,5 @@
+# DomeGym
+
 ## Domain Ubiquitous Language 
 * A user can create a participant profile
 * Participants can reserve spot in a session
