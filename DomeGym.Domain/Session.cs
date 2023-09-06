@@ -5,7 +5,7 @@ namespace DomeGym.Domain;
 public class Session
 {
     private readonly Guid _trainerId;
-    private readonly List<Guid> _participantIds = new ();
+    private readonly List<Reservation> _reservations = new ();
     private readonly int _maxParticipants;
 
     public Session (
@@ -29,12 +29,18 @@ public class Session
 
     public ErrorOr<Success> ReserveSpot (Participant participant)
     {
-        if (_participantIds.Count >= _maxParticipants)
+        if (_reservations.Count >= _maxParticipants)
         {
             return SessionErrors.CannotHaveMoreReservationThanParticipants;
         }
+        
+        if (_reservations.Any(r => r.ParticipantId == participant.Id))
+        {
+            return Error.Conflict(description: "Participant already has a reservation");
+        }
 
-        _participantIds.Add(participant.Id);
+        _reservations.Add(
+            new Reservation(participant.Id));
 
         return Result.Success;
     }
@@ -44,8 +50,14 @@ public class Session
         if (IsTooCloseToSession(dateTimeProvider.UtcNow))
             return SessionErrors.CannotCancelReservationTooCloseToSession;
 
-        if (_participantIds.Remove(participant.Id))
+        var reservation = _reservations.FirstOrDefault(r => r.ParticipantId == participant.Id);
+        
+        if (reservation is null)
+        {
             return Error.NotFound(description: "Participant is not found");
+        }
+
+        _reservations.Remove(reservation);
 
         return Result.Success;
     }
