@@ -4,8 +4,6 @@ namespace DomeGym.Domain;
 
 public class Session
 {
-    private readonly TimeOnly _startTime;
-    private readonly TimeOnly _endTime;
     private readonly Guid _trainerId;
     private readonly List<Guid> _participantIds = new ();
     private readonly int _maxParticipants;
@@ -56,6 +54,6 @@ public class Session
     {
         const int MinHours = 24;
 
-        return (Date.ToDateTime(_startTime) - utcNow).TotalHours < MinHours;
+        return (Date.ToDateTime(Time.Start) - utcNow).TotalHours < MinHours;
     }
 }
