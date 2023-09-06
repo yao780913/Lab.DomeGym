@@ -1,21 +1,22 @@
-﻿using ErrorOr;
+﻿using DomeGym.Domain.Common;
+using DomeGym.Domain.GymAggregate;
+using ErrorOr;
 
-namespace DomeGym.Domain;
+namespace DomeGym.Domain.SubscriptionAggregate;
 
-public class Subscription
+public class Subscription : AggregateRoot
 {
     private readonly SubscriptionType _subscriptionType;
     private readonly Guid _adminId;
-    private readonly Guid _id;
     private readonly List<Guid> _gymIds = new ();
     private int _maxGyms;
 
-    public Subscription (SubscriptionType subscriptionType, Guid adminId, Guid id)
+    public Subscription (SubscriptionType subscriptionType, Guid adminId, Guid? id = null)
+    :base (id ?? Guid.NewGuid())
     {
         _subscriptionType = subscriptionType;
         _maxGyms = GetMaxGyms();
         _adminId = adminId;
-        _id = id;
     }
 
     public int GetMaxGyms () => _subscriptionType.Name switch

@@ -1,9 +1,11 @@
 ﻿using DomeGym.Domain.Common;
+using DomeGym.Domain.Common.Entities;
+using DomeGym.Domain.SessionAggregate;
 using ErrorOr;
 
-namespace DomeGym.Domain;
+namespace DomeGym.Domain.ParticipantAggregate;
 
-public class Participant : Entity
+public class Participant : AggregateRoot
 {
     private readonly Schedule _schedule = Schedule.Empty();
     private readonly List<Guid> _sessionIds = new ();
@@ -13,10 +15,7 @@ public class Participant : Entity
         : base(id ?? Guid.NewGuid())
     {
         _userId = userId;
-        Id = id ?? Guid.NewGuid();
     }
-
-    public Guid Id { get; }
 
     public ErrorOr<Success> AddSessionToSchedule (Session session)
     {

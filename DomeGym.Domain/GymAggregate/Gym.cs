@@ -1,21 +1,21 @@
-﻿using ErrorOr;
+﻿using DomeGym.Domain.Common;
+using DomeGym.Domain.RoomAggregate;
+using ErrorOr;
 
-namespace DomeGym.Domain;
+namespace DomeGym.Domain.GymAggregate;
 
-public class Gym
+public class Gym : AggregateRoot
 {
     private readonly int _maxRooms;
     private readonly Guid _subscriptionId;
     private readonly List<Guid> _roomIds = new ();
 
-    public Gym (int maxRooms, Guid subscriptionId, Guid id)
+    public Gym (int maxRooms, Guid subscriptionId, Guid? id = null)
+        :base (id ?? Guid.NewGuid())
     {
         _maxRooms = maxRooms;
         _subscriptionId = subscriptionId;
-        Id = id;
     }
-
-    public Guid Id { get; }
 
     public ErrorOr<Success> AddRoom (Room room)
     {

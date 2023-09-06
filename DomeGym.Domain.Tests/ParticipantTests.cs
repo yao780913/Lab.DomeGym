@@ -1,4 +1,6 @@
-﻿using DomeGym.Domain.Tests.TestConstants;
+﻿using DomeGym.Domain.Common.ValueObjects;
+using DomeGym.Domain.ParticipantAggregate;
+using DomeGym.Domain.Tests.TestConstants;
 using DomeGym.Domain.Tests.TestUtils.Participants;
 using DomeGym.Domain.Tests.TestUtils.Sessions;
 using FluentAssertions;

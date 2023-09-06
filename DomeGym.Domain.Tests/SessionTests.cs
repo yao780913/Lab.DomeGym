@@ -1,3 +1,4 @@
+using DomeGym.Domain.SessionAggregate;
 using DomeGym.Domain.Tests.TestConstants;
 using DomeGym.Domain.Tests.TestUtils.Participants;
 using DomeGym.Domain.Tests.TestUtils.Services;

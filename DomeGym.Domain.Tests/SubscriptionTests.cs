@@ -1,4 +1,5 @@
-﻿using DomeGym.Domain.Tests.TestUtils.Gyms;
+﻿using DomeGym.Domain.SubscriptionAggregate;
+using DomeGym.Domain.Tests.TestUtils.Gyms;
 using DomeGym.Domain.Tests.TestUtils.Subscriptions;
 using FluentAssertions;
 

@@ -1,6 +1,6 @@
-using ErrorOr;
+﻿using ErrorOr;
 
-namespace DomeGym.Domain;
+namespace DomeGym.Domain.RoomAggregate;
 
 public static class RoomErrors
 {

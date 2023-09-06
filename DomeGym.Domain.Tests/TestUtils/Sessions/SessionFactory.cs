@@ -1,4 +1,6 @@
-﻿using DomeGym.Domain.Tests.TestConstants;
+﻿using DomeGym.Domain.Common.ValueObjects;
+using DomeGym.Domain.SessionAggregate;
+using DomeGym.Domain.Tests.TestConstants;
 
 namespace DomeGym.Domain.Tests.TestUtils.Sessions;
 

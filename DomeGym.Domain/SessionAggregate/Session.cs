@@ -1,8 +1,13 @@
-﻿using ErrorOr;
+﻿using DomeGym.Domain.Common;
+using DomeGym.Domain.Common.Entities;
+using DomeGym.Domain.Common.Interfaces;
+using DomeGym.Domain.Common.ValueObjects;
+using DomeGym.Domain.ParticipantAggregate;
+using ErrorOr;
 
-namespace DomeGym.Domain;
+namespace DomeGym.Domain.SessionAggregate;
 
-public class Session
+public class Session : AggregateRoot
 {
     private readonly Guid _trainerId;
     private readonly List<Reservation> _reservations = new ();
@@ -14,16 +19,14 @@ public class Session
         int maxParticipants,
         Guid trainerId,
         Guid? id = null)
+    :base(id ?? Guid.NewGuid())
     {
         Date = date;
         _maxParticipants = maxParticipants;
         _trainerId = trainerId;
         Time = time;
-
-        Id = id ?? Guid.NewGuid();
     }
 
-    public Guid Id { get; }
     public DateOnly Date { get; }
     public TimeRange Time { get; set; }
 

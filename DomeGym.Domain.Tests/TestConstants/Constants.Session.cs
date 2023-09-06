@@ -1,4 +1,6 @@
-﻿namespace DomeGym.Domain.Tests.TestConstants;
+﻿using DomeGym.Domain.Common.ValueObjects;
+
+namespace DomeGym.Domain.Tests.TestConstants;
 
 public static partial class Constants
 {

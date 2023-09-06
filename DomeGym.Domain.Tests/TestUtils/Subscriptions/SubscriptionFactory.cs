@@ -1,4 +1,6 @@
-﻿using DomeGym.Domain.Tests.TestConstants;
+﻿using DomeGym.Domain.SessionAggregate;
+using DomeGym.Domain.SubscriptionAggregate;
+using DomeGym.Domain.Tests.TestConstants;
 
 namespace DomeGym.Domain.Tests.TestUtils.Subscriptions;
 

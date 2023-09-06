@@ -1,6 +1,4 @@
-using DomeGym.Domain.Common;
-
-namespace DomeGym.Domain;
+namespace DomeGym.Domain.Common.Entities;
 
 public class Reservation : Entity
 {

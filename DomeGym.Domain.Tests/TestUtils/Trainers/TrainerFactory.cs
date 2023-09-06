@@ -1,4 +1,5 @@
 ﻿using DomeGym.Domain.Tests.TestConstants;
+using DomeGym.Domain.TrainerAggregate;
 
 namespace DomeGym.Domain.Tests.TestUtils.Trainers;
 
