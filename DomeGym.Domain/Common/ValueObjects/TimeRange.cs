@@ -11,18 +11,25 @@ public class TimeRange : ValueObject
     
     public TimeRange (TimeOnly start, TimeOnly end)
     {
-        Start = start;
+        Start = start.Throw().IfGreaterThanOrEqualTo(end);
         End = end;
     }
 
     public static ErrorOr<TimeRange> FromDateTimes (DateTime start, DateTime end)
     {
-        if (start.Date != end.Date || start > end)
+        if (start.Date != end.Date)
         {
-            return Error.Validation();
+            return Error.Validation(description: "Start and end date must be the same");
+        }
+
+        if (start >= end)
+        {
+            return Error.Validation(description: "End time must be greater than the start time");
         }
         
-        return new TimeRange(TimeOnly.FromDateTime(start), TimeOnly.FromDateTime(end));
+        return new TimeRange(
+            TimeOnly.FromDateTime(start), 
+            TimeOnly.FromDateTime(end));
     }
 
     public static TimeRange CreateFromHours (int startHour, int endHour)
