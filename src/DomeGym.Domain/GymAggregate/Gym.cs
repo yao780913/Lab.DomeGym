@@ -6,16 +6,23 @@ namespace DomeGym.Domain.GymAggregate;
 
 public class Gym : AggregateRoot
 {
+    
     private readonly int _maxRooms;
-    private readonly Guid _subscriptionId;
     private readonly List<Guid> _roomIds = new ();
 
-    public Gym (int maxRooms, Guid subscriptionId, Guid? id = null)
+    public string Name { get; }
+
+    public Guid SubscriptionId { get; }
+
+    public Gym (string name, int maxRooms, Guid subscriptionId, Guid? id = null)
         :base (id ?? Guid.NewGuid())
     {
+        Name = name;
         _maxRooms = maxRooms;
-        _subscriptionId = subscriptionId;
+        SubscriptionId = subscriptionId;
     }
+    
+    
 
     public ErrorOr<Success> AddRoom (Room room)
     {
