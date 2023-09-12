@@ -1,3 +1,6 @@
+using DomeGym.Application;
+using DomeGym.Infrastructure;
+
 var builder = WebApplication.CreateBuilder(args);
 
 {
@@ -8,6 +11,10 @@ var builder = WebApplication.CreateBuilder(args);
     builder.Services.AddEndpointsApiExplorer();
     builder.Services.AddSwaggerGen();
     builder.Services.AddHttpContextAccessor();
+    
+    builder.Services
+        .AddApplication()
+        .AddInfrastructure(connectionString: "Data Source = DomeGym.db");
 }
 
 var app = builder.Build();
