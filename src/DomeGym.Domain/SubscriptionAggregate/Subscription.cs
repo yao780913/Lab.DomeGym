@@ -40,4 +40,9 @@ public class Subscription : AggregateRoot
 
         return Result.Success;
     }
+
+    public bool HasGym (Guid gymId)
+    {
+        return _gymIds.Contains(gymId);
+    }
 }

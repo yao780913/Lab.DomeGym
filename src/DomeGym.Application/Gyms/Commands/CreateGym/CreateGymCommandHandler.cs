@@ -18,7 +18,10 @@ public class CreateGymCommandHandler : IRequestHandler<CreateGymCommand, ErrorOr
     {
         var subscription = await _subscriptionsRepository.GetByIdAsync(command.SubscriptionId);
 
-        if (subscription is null) return Error.NotFound(description: "Subscription not found");
+        if (subscription is null)
+        {
+            return Error.NotFound(description: "Subscription not found");
+        }
 
         var gym = new Gym(
             command.Name,
