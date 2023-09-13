@@ -9,13 +9,14 @@ public class Participant : AggregateRoot
 {
     private readonly Schedule _schedule = Schedule.Empty();
     private readonly List<Guid> _sessionIds = new ();
-    private readonly Guid _userId;
 
     public Participant (Guid userId, Guid? id = null)
         : base(id ?? Guid.NewGuid())
     {
-        _userId = userId;
+        UserId = userId;
     }
+
+    public Guid UserId { get; }
 
     public ErrorOr<Success> AddSessionToSchedule (Session session)
     {

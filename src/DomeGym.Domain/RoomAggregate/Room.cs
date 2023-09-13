@@ -7,13 +7,19 @@ namespace DomeGym.Domain.RoomAggregate;
 
 public class Room : AggregateRoot
 {
+
     private readonly int _maxDailySession;
     private readonly Schedule _schedule;
     private readonly List<Guid> _sessionIds = new ();
+    
+    public string Name { get; }
+    public Guid GymId { get; }
 
-    public Room (int maxDailySession, Schedule? schedule = null, Guid? id = null)
+    public Room (string name, Guid gymId, int maxDailySession, Schedule? schedule = null, Guid? id = null)
         : base (id ?? Guid.NewGuid())
     {
+        Name = name;
+        GymId = gymId;
         _maxDailySession = maxDailySession;
         _schedule = schedule ?? Schedule.Empty();
     }

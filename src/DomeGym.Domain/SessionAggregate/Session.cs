@@ -9,30 +9,45 @@ namespace DomeGym.Domain.SessionAggregate;
 
 public class Session : AggregateRoot
 {
-    private readonly Guid _trainerId;
     private readonly List<Reservation> _reservations = new ();
-    private readonly int _maxParticipants;
 
-    public Session (
-        DateOnly date,
-        TimeRange time,
-        int maxParticipants,
-        Guid trainerId,
-        Guid? id = null)
-    :base(id ?? Guid.NewGuid())
-    {
-        Date = date;
-        _maxParticipants = maxParticipants;
-        _trainerId = trainerId;
-        Time = time;
-    }
-
+    public string Name { get; }
+    public string Description { get; }
     public DateOnly Date { get; }
     public TimeRange Time { get; set; }
+    public List<SessionCategory> Categories { get; }
+
+    public Guid TrainerId { get; }
+
+    public int MaxParticipants { get; }
+    public Guid RoomId { get; }
+
+    public Session (
+        string name,
+        string description,
+        short maxParticipants,
+        Guid roomId,
+        Guid trainerId,
+        DateOnly date,
+        TimeRange time,
+        List<SessionCategory> categories,
+        Guid? id = null)
+        :base(id ?? Guid.NewGuid())
+    {
+        Name = name;
+        Description = description;
+        Date = date;
+        MaxParticipants = maxParticipants;
+        RoomId = roomId;
+        TrainerId = trainerId;
+        Time = time;
+        Categories = categories;
+    }
+
 
     public ErrorOr<Success> ReserveSpot (Participant participant)
     {
-        if (_reservations.Count >= _maxParticipants)
+        if (_reservations.Count >= MaxParticipants)
         {
             return SessionErrors.CannotHaveMoreReservationThanParticipants;
         }

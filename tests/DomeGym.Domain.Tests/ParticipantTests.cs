@@ -24,12 +24,12 @@ public class ParticipantTests
         
         var session1 = SessionFactory.CreateSession(
             date: Constants.Session.Date,
-            time: TimeRange.CreateFromHours(startHourSession1, endHourSession1),
+            time: TimeRange.CreateFromHours(startHourSession1, endHourSession1), 
             id: Guid.NewGuid());
         
         var session2 = SessionFactory.CreateSession(
             date: Constants.Session.Date,
-            time: TimeRange.CreateFromHours(startHourSession2, endHourSession2),
+            time: TimeRange.CreateFromHours(startHourSession2, endHourSession2), 
             id: Guid.NewGuid());
 
         var addSession1Result = participant.AddSessionToSchedule(session1);

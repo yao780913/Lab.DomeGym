@@ -8,19 +8,20 @@ public class Subscription : AggregateRoot
 {
     private readonly Guid _adminId;
     private readonly List<Guid> _gymIds = new ();
-    private readonly SubscriptionType _subscriptionType;
     private readonly int _maxGyms;
 
     public Subscription (SubscriptionType subscriptionType, Guid adminId, Guid? id = null)
         : base(id ?? Guid.NewGuid())
     {
-        _subscriptionType = subscriptionType;
+        SubscriptionType = subscriptionType;
         _maxGyms = GetMaxGyms();
         _adminId = adminId;
     }
 
+    public SubscriptionType SubscriptionType { get; }
+
     public int GetMaxGyms () =>
-        _subscriptionType.Name switch
+        SubscriptionType.Name switch
         {
             nameof(SubscriptionType.Free)    => 1,
             nameof(SubscriptionType.Starter) => 1,
@@ -41,8 +42,5 @@ public class Subscription : AggregateRoot
         return Result.Success;
     }
 
-    public bool HasGym (Guid gymId)
-    {
-        return _gymIds.Contains(gymId);
-    }
+    public bool HasGym (Guid gymId) => _gymIds.Contains(gymId);
 }

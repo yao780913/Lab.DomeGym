@@ -5,21 +5,22 @@ using ErrorOr;
 
 namespace DomeGym.Domain.TrainerAggregate;
 
-public class Trainer :AggregateRoot
+public class Trainer : AggregateRoot
 {
-    private readonly Guid _userId;
-    private readonly List<Guid> _sessionIds = new();
     private readonly Schedule _schedule;
+    private readonly List<Guid> _sessionIds = new ();
 
-    public Trainer(
+    public Trainer (
         Guid userId,
         Schedule? schedule = null,
         Guid? id = null)
-        :base (id ?? Guid.NewGuid())
+        : base(id ?? Guid.NewGuid())
     {
-        _userId = userId;
+        UserId = userId;
         _schedule = schedule ?? Schedule.Empty();
     }
+
+    public Guid UserId { get; }
 
     public ErrorOr<Success> AddSessionToSchedule (Session session)
     {
@@ -31,9 +32,9 @@ public class Trainer :AggregateRoot
         if (bookTimeSlotResult.IsError
             && bookTimeSlotResult.FirstError.Type == ErrorType.Conflict)
             return TrainerErrors.CannotHaveTwoOrMoreOverlappingSessions;
-        
+
         _sessionIds.Add(session.Id);
-        
+
         return Result.Success;
     }
 }
